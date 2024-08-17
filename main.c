@@ -12,21 +12,20 @@
 
 #include "minishell.h"
 
-void user_input(char *command){
-    read(0, command, sizeof(command));
-}
-
-static void display_prompt(){
-    printf("minishell$");
-}
-
 int main(){
-    char command[128];
+    char *command;
     while(1)
     {
-        display_prompt();
-        user_input(command);
-        execute_command(command);
+        command = readline("minishell$");
+        if (command == NULL) {
+            break;
+        }
+        if (*command) {
+            add_history(command);
+            execute_command(command);
+        }
+        
+        free(command);
     }
     return 0;
 }
