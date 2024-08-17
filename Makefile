@@ -14,6 +14,8 @@ NAME = main
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+LDFLAGS = -lreadline
+
 
 NAME_SRCS = main.c
 
@@ -22,7 +24,7 @@ NAME_OBJS = $(NAME_SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(NAME_OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(NAME_OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(NAME_OBJS) $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
