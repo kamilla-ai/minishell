@@ -10,3 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
+void user_input(char *command){
+    read(0, command, sizeof(command));
+}
+
+static void display_prompt(){
+    printf("minishell$");
+}
+
+int main(){
+    char command[128];
+    while(1)
+    {
+        display_prompt();
+        user_input(command);
+        execute_command(command);
+    }
+    return 0;
+}
