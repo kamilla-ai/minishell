@@ -16,14 +16,14 @@ int main(){
     char *command;
     while(1)
     {
-        command = readline("minishell$");
-        if (command == NULL) {
-            break;
-        }
-        if (*command) {
-            add_history(command);
-            execute_command(command);
-        }
+        command = readline("minishell$ ");
+        // if (command == NULL) {
+        //     break;
+        // }
+        // if (*command) {
+        //     add_history(command);
+        //     execute_command(command);
+        // }
         
         free(command);
     }
