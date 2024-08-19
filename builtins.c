@@ -6,14 +6,16 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:14:05 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/19 14:15:23 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:35:46 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void echo(char *message){
-    printf("%s", message);
-}
+#include "minishell.h"
+// void echo(char *message){
+//     printf("%s", message);
+// }
 
 void pwd(){
-    return getcwd();
+    char cwd[1024];
+    printf("%s\n",getcwd(cwd, sizeof(cwd)));
 }
