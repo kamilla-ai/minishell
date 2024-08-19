@@ -6,7 +6,7 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:55:09 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/19 15:01:12 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:43:17 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void execute_builtin(char *command){
         ;
         // cd();
     }else if(ft_strcmp("pwd", command)==true){
-        ;
-        // pwd();
+        pwd();
     }else if(ft_strcmp("export", command)==true){
         ;
         // export();
