@@ -22,7 +22,7 @@ int main(){
         }
         if (*command) {
             add_history(command);
-        //     execute_command(command);
+            execute_command(command);
         }
         
         free(command);
