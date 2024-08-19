@@ -6,7 +6,7 @@
 #    By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/22 14:53:08 by krazikho          #+#    #+#              #
-#    Updated: 2024/08/14 15:00:33 by krazikho         ###   ########.fr        #
+#    Updated: 2024/08/19 15:34:47 by krazikho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lreadline
 
 
-NAME_SRCS = main.c
+NAME_SRCS = main.c utils.c execute_command.c execute_builtin.c builtins.c
 
 NAME_OBJS = $(NAME_SRCS:.c=.o)
 
