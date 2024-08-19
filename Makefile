@@ -3,21 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+         #
+#    By: mrhelmy <mrhelmy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/22 14:53:08 by krazikho          #+#    #+#              #
-#    Updated: 2024/08/19 15:34:47 by krazikho         ###   ########.fr        #
+#    Updated: 2024/08/19 16:23:58 by mrhelmy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = main
+NAME = minishell #changed name of the program
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lreadline
 
 
-NAME_SRCS = main.c utils.c execute_command.c execute_builtin.c builtins.c
+NAME_SRCS = main.c utils.c execute_command.c execute_builtin.c storing_env.c free.c ./builtins/pwd.c ./builtins/env.c 
 
 NAME_OBJS = $(NAME_SRCS:.c=.o)
 
@@ -37,4 +37,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re #Do we need it ?
