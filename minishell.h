@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:58:51 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/20 16:01:49 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/20 17:41:01 by thelmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct env
 
 // Functions used to store the enironment in the struct
 
-t_env   *create_env_Nodes(char *variable_content, char *value_content); // warning malloc used
+t_env   *create_env_nodes(char *variable_content, char *value_content); // warning malloc used
 t_env   *storing_env(char **ev); // warning createNodes used here which uses malloc
 void    free_env(t_env *env);
 
