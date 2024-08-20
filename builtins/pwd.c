@@ -11,11 +11,11 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-// void echo(char *message){
-//     printf("%s", message);
-// }
-
 void pwd(){
     char cwd[1024];
-    printf("%s\n",getcwd(cwd, sizeof(cwd)));
+    if(!getcwd(cwd, sizeof(cwd))){
+        printf("Error with reading current directory");
+    }else{
+        printf("%s\n", getcwd(cwd, sizeof(cwd)));
+    }
 }
