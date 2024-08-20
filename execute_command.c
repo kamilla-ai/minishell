@@ -6,7 +6,7 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:27:04 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/19 15:34:26 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/20 16:17:05 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool is_executable(char *command){
     (void)command;
-    return true;
+    return false;
 }
 
 static bool is_builtin(char *command){
@@ -29,9 +29,9 @@ static bool is_builtin(char *command){
     }
 }
 
-void execute_command(char *command){
+void execute_command(char *command, t_env *env){
     if(is_builtin(command)==true){
-        execute_builtin(command);
+        execute_builtin(command, env);
     }else if(is_executable(command)==true){
         ;
         // execute_external(command);
