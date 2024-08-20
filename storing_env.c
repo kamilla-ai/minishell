@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   storing_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrhelmy <mrhelmy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:31:26 by mrhelmy           #+#    #+#             */
-/*   Updated: 2024/08/19 11:51:47 by mrhelmy          ###   ########.fr       */
+/*   Updated: 2024/08/20 17:43:53 by thelmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *substr_after_char(char *str , char c)
+char	*substr_after_char(char *str, char c)
 {
-	int i;
-	int len;
-	
+	int		i;
+	int		len;
+	char	*new_str;
+
 	if (!str)
-        return (NULL);
+		return (NULL);
 	i = 0;
 	len = 0;
 	while (str[i] && str[i] != c)
@@ -26,39 +27,34 @@ char *substr_after_char(char *str , char c)
 	if (str[i] != c)
 		return (NULL);
 	i++;
-	while(str[i + len])
+	while (str[i + len])
 		len++;
-	char *new_str = malloc(sizeof(char) * (len) + 1);
+	new_str = malloc(sizeof(char) * (len + 1));
 	if (!new_str)
 		return (NULL);
 	len = 0;
-	while(str[i])
+	while (str[i])
 		new_str[len++] = str[i++];
 	new_str[len] = '\0';
 	return (new_str);
 }
 
-char *substr_before_char(char *str , char c)
+char	*substr_before_char(char *str, char c)
 {
-	int i;
+	int		i;
+	char	*new_str;
 
 	if (!str)
-        return (NULL);
+		return (NULL);
 	i = 0;
-	while(str[i])
-	{
-		if (str[i] == c)
-			break;
+	while (str[i] && str[i] != c)
 		i++;
-	}
-	char *new_str = malloc(sizeof(char) * i);
+	new_str = malloc(sizeof(char) * (i + 1));
 	if (!new_str)
 		return (NULL);
 	i = 0;
-	while(str[i])
+	while (str[i] && str[i] != c)
 	{
-		if (str[i] == c)
-			break;
 		new_str[i] = str[i];
 		i++;
 	}
@@ -66,11 +62,11 @@ char *substr_before_char(char *str , char c)
 	return (new_str);
 }
 
-t_env *create_env_Nodes(char *variable_content, char *value_content)
+t_env	*create_env_nodes(char *variable_content, char *value_content)
 {
-	t_env *list;
+	t_env	*list;
 
-	list = malloc(sizeof(list));
+	list = malloc(sizeof(t_env));
 	if (!list)
 		return (NULL);
 	list->variable = variable_content;
@@ -79,31 +75,31 @@ t_env *create_env_Nodes(char *variable_content, char *value_content)
 	return (list);
 }
 
-t_env *storing_env(char **ev)
+t_env	*storing_env(char **ev)
 {
-	t_env *env;
-	t_env *tmp;
-	t_env *newnode;
-	int i;
+	t_env	*env;
+	t_env	*tmp;
+	t_env	*newnode;
+	int		i;
 
 	if (!ev || !ev[0])
-        return NULL;
-	env = create_env_Nodes(substr_before_char(ev[0], '='), substr_after_char(ev[0], '='));
+		return (NULL);
+	env = create_env_nodes(substr_before_char(ev[0], '='),
+			substr_after_char(ev[0], '='));
 	if (!env)
-        return (NULL);
+		return (NULL);
 	newnode = NULL;
 	tmp = env;
 	i = 1;
-	
-	while(ev[i])
+	while (ev[i])
 	{
-		newnode = create_env_Nodes(substr_before_char(ev[i], '='), substr_after_char(ev[i], '='));
+		newnode = create_env_nodes(substr_before_char(ev[i], '='),
+				substr_after_char(ev[i], '='));
 		if (!newnode)
 			return (free_env(env), NULL);
 		tmp ->next = newnode;
 		tmp = tmp->next;
 		i++;
 	}
-	// printlist(env);
 	return (env);
 }
