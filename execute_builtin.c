@@ -6,12 +6,12 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:55:09 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/19 15:43:17 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/20 15:59:48 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-void execute_builtin(char *command){
+void execute_builtin(char *command, t_env *envir){
     if(ft_strcmp("echo", command)==true){
         ;
         // echo();
@@ -27,8 +27,7 @@ void execute_builtin(char *command){
         ;
         // unset();
     }else if(ft_strcmp("env", command)==true){
-        ;
-        // env();
+        env(envir);
     }else if(ft_strcmp("exit", command)==true){
         ;
         // exit();
