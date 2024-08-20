@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrhelmy <mrhelmy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:58:51 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/19 16:13:06 by mrhelmy          ###   ########.fr       */
+/*   Updated: 2024/08/20 16:01:49 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void    env(t_env *env);
 char    *substr_before_char(char *str , char c); // warning malloc is used
 char    *substr_after_char(char *str , char c); // warning malloc is used
 
-void execute_command(char *command);
+void execute_command(char *command, t_env *env);
 int	ft_strcmp(char *s1, char *s2);
-void execute_builtin(char *command);
+void execute_builtin(char *command, t_env *env);
 void pwd();
 #endif
