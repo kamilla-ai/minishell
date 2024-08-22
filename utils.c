@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrhelmy <mrhelmy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:32:30 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/19 14:45:16 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/21 18:13:28 by mrhelmy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static size_t	ft_strlen(const char *s)
-{
-	int	len;
+// static size_t	ft_strlen(const char *s)
+// {
+// 	int	len;
 
-	len = 0;
-	while (s[len])
-	{
-		len++;
-	}
-	return ((size_t)len);
-}
+// 	len = 0;
+// 	while (s[len])
+// 	{
+// 		len++;
+// 	}
+// 	return ((size_t)len);
+// }
 
 int	ft_strcmp(char *s1, char *s2)
 {
