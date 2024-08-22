@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrhelmy <mrhelmy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:58:22 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/20 16:17:39 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:24:00 by mrhelmy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int main(int ac, char **av, char **ev){
         if (*command) {
             add_history(command);
             
-            execute_command(command, envir);
+            envir = execute_command(command, envir);
         }
-        
         free(command);
     }
+    free_env(envir);
     return 0;
 }
