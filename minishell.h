@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mrhelmy <mrhelmy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:58:51 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/20 17:41:01 by thelmy           ###   ########.fr       */
+/*   Updated: 2024/08/21 21:47:07 by mrhelmy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-// our environment struct
+// Our environment struct
 typedef struct env
 {
 	char *variable;
@@ -32,18 +32,47 @@ typedef struct env
 
 t_env   *create_env_nodes(char *variable_content, char *value_content); // warning malloc used
 t_env   *storing_env(char **ev); // warning createNodes used here which uses malloc
-void    free_env(t_env *env);
 
-// env command (printing the environment)
 
+// Env command (printing the environment)
 void    env(t_env *env);
+
+// export without args
+void    sort_array(t_env **env_arr, int count);
+void    printing_export(t_env **env_arr, int env_count);
+void    export_no_arg(t_env *env);
+
+// export with args
+void update_env(t_env **env, char *variable, char *value);
+void export_with_args(t_env **env, int ac, char **av);
+
+// unset_practice
+void    unset_env(t_env **env, char *variable);
+void    unset(t_env **env, int ac, char **av);
 
 // We might use them, globally
 char    *substr_before_char(char *str , char c); // warning malloc is used
 char    *substr_after_char(char *str , char c); // warning malloc is used
+int     ft_strcmp(char *s1, char *s2);
+int     listsize(t_env *env);
+int     count_args(char **args);
+int     num_strncmp(char *s1, char* s2);
 
-void execute_command(char *command, t_env *env);
-int	ft_strcmp(char *s1, char *s2);
-void execute_builtin(char *command, t_env *env);
+// Freeing functions
+void    free_env(t_env *env);
+char	**free_arr(char **arr);
+void    free_env_node(t_env *node);
+
+// Temperory libft functions
+size_t	ft_strlen(const char *s);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+int     wordcount(char *str, char sep);
+char	**getwords(char **arr, char *s, char c, int word);
+char	**ft_split(char const *s, char c);
+
+
+t_env *execute_command(char *command, t_env *env);
+t_env *execute_builtin(char *command, t_env *env, char **args);
 void pwd();
 #endif
