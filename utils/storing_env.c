@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   storing_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:31:26 by mrhelmy           #+#    #+#             */
-/*   Updated: 2024/08/20 17:43:53 by thelmy           ###   ########.fr       */
+/*   Updated: 2024/08/23 12:59:03 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char	*substr_after_char(char *str, char c)
 {

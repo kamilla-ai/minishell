@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_with_args.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrhelmy <mrhelmy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 18:10:03 by mrhelmy           #+#    #+#             */
-/*   Updated: 2024/08/21 19:07:14 by mrhelmy          ###   ########.fr       */
+/*   Updated: 2024/08/23 14:23:25 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void update_env(t_env **env, char *variable, char *value)
 	{
 		if (num_strncmp(tmp->variable, variable) == 0)
         {
-            free(tmp->value);
+            // free(tmp->value);
             tmp->value = value;
-            free(variable);
+            // free(variable);
             return;
         }
 		tmp = tmp->next;

@@ -6,11 +6,11 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:56:46 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/20 14:07:49 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/23 12:58:32 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 void echo(char **command){
     bool n_flag;
     int i;

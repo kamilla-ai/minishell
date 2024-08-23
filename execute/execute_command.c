@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrhelmy <mrhelmy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:27:04 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/21 21:52:50 by mrhelmy          ###   ########.fr       */
+/*   Updated: 2024/08/23 12:58:47 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static bool is_executable(char *command){
     (void)command;

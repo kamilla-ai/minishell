@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrhelmy <mrhelmy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:58:51 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/21 21:47:07 by mrhelmy          ###   ########.fr       */
+/*   Updated: 2024/08/23 13:23:13 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,5 @@ char	**ft_split(char const *s, char c);
 t_env *execute_command(char *command, t_env *env);
 t_env *execute_builtin(char *command, t_env *env, char **args);
 void pwd();
+void cd(char **args, t_env **envir);
 #endif
