@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:58:51 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/23 13:23:13 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/27 09:50:31 by thelmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 #include <readline/history.h>
 #include <stdbool.h>
 #include <stdlib.h>
-
+#include <string.h> // remove it when we will use libft
+#include <ctype.h> // remove it when we will use libft
 // Our environment struct
 typedef struct env
 {
@@ -43,6 +44,7 @@ void    printing_export(t_env **env_arr, int env_count);
 void    export_no_arg(t_env *env);
 
 // export with args
+int is_valid_identifier(const char *str);
 void update_env(t_env **env, char *variable, char *value);
 void export_with_args(t_env **env, int ac, char **av);
 
@@ -72,8 +74,8 @@ char	**getwords(char **arr, char *s, char c, int word);
 char	**ft_split(char const *s, char c);
 
 
-t_env *execute_command(char *command, t_env *env);
-t_env *execute_builtin(char *command, t_env *env, char **args);
+t_env *execute_command(char *command, t_env *envir, int *exit_status);
+t_env *execute_builtin(char *command, t_env *envir, char **args, int *last_exit_status);
 void pwd();
 void cd(char **args, t_env **envir);
 #endif
