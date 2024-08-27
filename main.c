@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrhelmy <mrhelmy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:58:22 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/21 21:24:00 by mrhelmy          ###   ########.fr       */
+/*   Updated: 2024/08/27 09:52:10 by thelmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int main(int ac, char **av, char **ev){
     (void)av;
     char *command;
     t_env *envir;
+    int last_exit_status;
+	last_exit_status = 0; 
     envir = storing_env(ev);
     while(1)
     {
@@ -26,11 +28,10 @@ int main(int ac, char **av, char **ev){
         }
         if (*command) {
             add_history(command);
-            
-            envir = execute_command(command, envir);
+            envir = execute_command(command, envir, &last_exit_status);
         }
         free(command);
     }
     free_env(envir);
-    return 0;
+    return (last_exit_status);
 }
