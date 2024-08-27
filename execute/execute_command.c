@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:27:04 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/23 12:58:47 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/27 09:38:05 by thelmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static bool is_builtin(char *command){
     }
 }
 
-t_env *execute_command(char *command, t_env *envir)
+t_env *execute_command(char *command, t_env *envir, int *last_exit_status)
 {
     char **args;
 
@@ -38,14 +38,15 @@ t_env *execute_command(char *command, t_env *envir)
         return envir;
     if (is_builtin(args[0])==true)
     {
-        envir = execute_builtin(command, envir , args);
+        envir = execute_builtin(command, envir , args, last_exit_status);
 	}
     else if(is_executable(command)==true){
-        ;
         // execute_external(command);
+        *last_exit_status = 0; // assuming command executed succesfully
     }else{
-        printf("bash: command not found: %s\n", command);
-        exit(1);
+        printf("bash:command not found: %s\n", command); // modifying this based on the bash syntax
+        *last_exit_status = 127; // status command not found
+        // exit(1);
     }
     free_arr(args);
     return (envir);
