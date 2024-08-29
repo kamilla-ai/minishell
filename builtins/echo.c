@@ -5,29 +5,36 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 13:56:46 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/23 12:58:32 by krazikho         ###   ########.fr       */
+/*   Created: 2024/08/27 19:03:09 by krazikho          #+#    #+#             */
+/*   Updated: 2024/08/29 13:43:56 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-void echo(char **command){
+
+void echo(char **command, t_env *env){
+    (void)env;
     bool n_flag;
     int i;
+    int j;
+
     n_flag=false;
     i=1;
-    if(ft_strcmp("-n",command[1])==true){
-        n_flag=true;
-        i++;
+    while(command[i] && command[i][0]=='-' && is_only_n(command[i]+1)){
+            n_flag=true;
+            i++;
     }
     while(command[i]){
-        printf("%s", command[i]);
-        if(command[i+1]){
-            printf(" ");
+        j=0;
+        while(command[i][j]){
+            if(command[i][j]!='\\')
+                printf("%c", command[i][j]);
+            j++;
         }
+        if(command[i+1])
+            printf(" ");
         i++;
     }
-
     if(n_flag==false){
         printf("\n");
     }

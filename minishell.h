@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:58:51 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/27 09:50:31 by thelmy           ###   ########.fr       */
+/*   Updated: 2024/08/29 13:44:59 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void    free_env_node(t_env *node);
 
 // Temperory libft functions
 size_t	ft_strlen(const char *s);
+char	*ft_strdup(const char *s1);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int     wordcount(char *str, char sep);
@@ -78,4 +79,9 @@ t_env *execute_command(char *command, t_env *envir, int *exit_status);
 t_env *execute_builtin(char *command, t_env *envir, char **args, int *last_exit_status);
 void pwd();
 void cd(char **args, t_env **envir);
+void update_env_for_cd(t_env **env, char *variable, char *value);
+char *getcopyenv(char *str, t_env **envir);
+void echo(char **command, t_env *env);
+bool is_only_n(const char *str);
+void change(char **args, t_env *envir);
 #endif

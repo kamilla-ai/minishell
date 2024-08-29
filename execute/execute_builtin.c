@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:55:09 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/27 09:36:19 by thelmy           ###   ########.fr       */
+/*   Updated: 2024/08/29 13:43:15 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@ t_env *execute_builtin(char *command, t_env *envir, char **args, int *last_exit_
 	if (!args || !args[0]) 
         return (envir);
 	count = count_args(args);
-	if (ft_strcmp("echo", args[0])==true)
-	{
-		;
-		// echo();
+	if (ft_strcmp("echo", args[0])==true){
+		echo(args, envir);
 		*last_exit_status = 0; // assuming it succeed
     }
     else if(ft_strcmp("cd", args[0])==true)
@@ -59,13 +57,13 @@ t_env *execute_builtin(char *command, t_env *envir, char **args, int *last_exit_
            unset(&envir, count, args);
 		*last_exit_status = 0; // assuming it succeed
 	}
-    else if(ft_strcmp("env", args[0])==true){
-        env(envir);
-		*last_exit_status = 0; // assuming it succeed
-    }
-    else if(ft_strcmp("exit", args[0])==true){
-       exit(*last_exit_status);
-    }
+  	else if(ft_strcmp("env", args[0])==true){
+    	env(envir);
+    	*last_exit_status = 0; // assuming it succeed
+  	}
+  	else if(ft_strcmp("exit", args[0])==true){
+    	exit(*last_exit_status);
+  	}
     // free_arr(args);
     return (envir);
 }

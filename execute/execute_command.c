@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:27:04 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/27 09:38:05 by thelmy           ###   ########.fr       */
+/*   Updated: 2024/08/29 13:41:45 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_env *execute_command(char *command, t_env *envir, int *last_exit_status)
     char **args;
 
     args = ft_split(command, ' '); // just for testing later we can parse better (temporary)
+    change(args, envir);
     if (!args || !args[0])
         return envir;
     if (is_builtin(args[0])==true)

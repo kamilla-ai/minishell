@@ -6,7 +6,7 @@
 #    By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/22 14:53:08 by krazikho          #+#    #+#              #
-#    Updated: 2024/08/23 12:57:33 by krazikho         ###   ########.fr        #
+#    Updated: 2024/08/29 13:39:35 by krazikho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,9 @@ CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lreadline
 
 
-NAME_SRCS = main.c execute/execute_command.c execute/execute_builtin.c\
-			utils/ft_split.c utils/ft_strcmp.c utils/storing_env.c utils/free.c \
-			./builtins/pwd.c ./builtins/env.c ./builtins/export_no_args.c \
+NAME_SRCS = main.c execute/execute_command.c execute/execute_builtin.c execute/expand.c\
+			utils/ft_split.c utils/ft_strcmp.c utils/storing_env.c utils/free.c utils/cd_utils.c utils/echo_utils.c\
+			./builtins/pwd.c ./builtins/env.c ./builtins/export_no_args.c ./builtins/echo.c\
 			./builtins/export_with_args.c ./builtins/unset.c  ./builtins/cd.c
 
 NAME_OBJS = $(NAME_SRCS:.c=.o)
