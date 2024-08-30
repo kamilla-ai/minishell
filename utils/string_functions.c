@@ -6,7 +6,7 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:03 by mrhelmy           #+#    #+#             */
-/*   Updated: 2024/08/23 11:36:59 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:09:26 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,28 @@
 
 // functions from libft... temperorally, until we upload a libft to our minishell project 
 
+bool	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strlen(s1) != ft_strlen(s2))
+	{
+		return (false);
+	}
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] == s2[i])
+		{
+			i++;
+		}
+		else
+		{
+			return (false);
+		}
+	}
+	return (true);
+}
 
 size_t	ft_strlen(const char *s)
 {

@@ -6,7 +6,7 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:01:48 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/23 12:58:52 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:29:49 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 void execute_external(char *command){
     pid_t pid;
     pid = fork();
-    execve(command);
+    // execve(command);
 }

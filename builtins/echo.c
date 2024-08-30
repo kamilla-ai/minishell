@@ -6,7 +6,7 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 19:03:09 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/29 13:43:56 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/29 17:36:33 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void echo(char **command, t_env *env){
     while(command[i]){
         j=0;
         while(command[i][j]){
-            if(command[i][j]!='\\')
-                printf("%c", command[i][j]);
+            printf("%c", command[i][j]);
             j++;
         }
         if(command[i+1])

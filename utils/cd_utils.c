@@ -6,24 +6,11 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 12:00:02 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/29 13:40:35 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:10:04 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char *getcopyenv(char *str, t_env **envir){
-    t_env *tmp;
-		
-	tmp = *envir;
-    while (tmp != NULL) {
-        if (ft_strcmp(tmp->variable, str) == true) {  // Check for equality explicitly
-            return tmp->value;  // Return the value if found
-        }
-        tmp = tmp->next;  // Move to the next node
-    }
-    return NULL;
-}
 
 void update_env_for_cd(t_env **env, char *variable, char *value)
 {

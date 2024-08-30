@@ -6,13 +6,13 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:55:09 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/29 13:43:15 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:26:41 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int count_args(char **args) 
+static int count_args(char **args) 
 {
     int count;
     
@@ -22,10 +22,9 @@ int count_args(char **args)
     return (count);
 }
 
-t_env *execute_builtin(char *command, t_env *envir, char **args, int *last_exit_status){
+t_env *execute_builtin(t_env *envir, char **args, int *last_exit_status){
 	int count;
 
-	(void)command;
 	if (!args || !args[0]) 
         return (envir);
 	count = count_args(args);

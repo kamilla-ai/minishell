@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   storing_env.c                                      :+:      :+:    :+:   */
+/*   env_related_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:31:26 by mrhelmy           #+#    #+#             */
-/*   Updated: 2024/08/27 09:46:41 by thelmy           ###   ########.fr       */
+/*   Updated: 2024/08/29 14:14:44 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char *getcopyenv(char *str, t_env **envir){
+    t_env *tmp;
+		
+	tmp = *envir;
+    while (tmp != NULL) {
+        if (ft_strcmp(tmp->variable, str) == true) {  // Check for equality explicitly
+            return tmp->value;  // Return the value if found
+        }
+        tmp = tmp->next;  // Move to the next node
+    }
+    return NULL;
+}
 
 char	*substr_after_char(char *str, char c)
 {
