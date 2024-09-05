@@ -6,7 +6,7 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:17:37 by mrhelmy           #+#    #+#             */
-/*   Updated: 2024/08/23 12:58:55 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:08:47 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,17 @@ void free_env_node(t_env *node)
         free(node->value);
         free(node);
     }
+}
+
+void ft_free_split(char **split) {
+    if (split == NULL) {
+        return; // Nothing to free if the array is NULL
+    }
+
+    char **temp = split;
+    while (*temp) {
+        free(*temp); // Free each string
+        temp++;
+    }
+    free(split); // Free the array of strings itself
 }

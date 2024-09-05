@@ -6,7 +6,7 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:58:51 by krazikho          #+#    #+#             */
-/*   Updated: 2024/09/05 11:58:38 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:55:00 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct env
 
 t_env   *create_env_nodes(char *variable_content, char *value_content); // warning malloc used
 t_env   *storing_env(char **ev); // warning createNodes used here which uses malloc
-
+char 	**convert_env(t_env *env);
 // Builtins
 void    env(t_env *env);
 void 	pwd();
@@ -67,6 +67,7 @@ int     num_strncmp(char *s1, char* s2);
 void    free_env(t_env *env);
 char	**free_arr(char **arr);
 void    free_env_node(t_env *node);
+void ft_free_split(char **split) ;
 
 // Temperory libft functions
 size_t	ft_strlen(const char *s);
@@ -87,8 +88,9 @@ bool is_only_n(const char *str);
 //execution
 t_env *execute_command(char *command, t_env *envir, int *exit_status);
 t_env *execute_builtin(t_env *envir, char **args, int *last_exit_status);
+void execute_external(char **args, t_env *envir, char *path);
 void modify_args(char **args, t_env *envir);
-
+char *find_executable(char *cmd, t_env *envir);
 //signals
 void sigint_handler(int sig);
 void sigquit_handler(int sig);
