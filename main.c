@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:58:22 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/27 09:52:10 by thelmy           ###   ########.fr       */
+/*   Updated: 2024/09/05 12:07:17 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@ int main(int ac, char **av, char **ev){
     int last_exit_status;
 	last_exit_status = 0; 
     envir = storing_env(ev);
+    configure_terminal_behavior();
+    signal(SIGINT, sigint_handler);
+    signal(SIGQUIT, sigquit_handler);
     while(1)
     {
         command = readline("minishell$ ");
         if (command == NULL) {
+            write(1, "exit\n", 5);
             break;
         }
         if (*command) {

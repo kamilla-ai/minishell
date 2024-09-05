@@ -6,7 +6,7 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:58:51 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/29 14:53:40 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/09/05 11:58:38 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 #include <stdbool.h> //bool
 #include <string.h> // remove it when we will use libft
 #include <ctype.h> // remove it when we will use libft
+#include <signal.h>
+#include <termios.h>
+
 // Our environment struct
 typedef struct env
 {
@@ -86,4 +89,8 @@ t_env *execute_command(char *command, t_env *envir, int *exit_status);
 t_env *execute_builtin(t_env *envir, char **args, int *last_exit_status);
 void modify_args(char **args, t_env *envir);
 
+//signals
+void sigint_handler(int sig);
+void sigquit_handler(int sig);
+void configure_terminal_behavior();
 #endif
