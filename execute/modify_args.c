@@ -6,72 +6,91 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 19:04:39 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/30 15:36:39 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:37:26 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h" 
 
-static int count_esc(char *str){
-    int count;
-    int i;
-    i=0;
-    count=0;
-    while(str[i]){
-        if(str[i]=='\\')
-            count++;
-        i++;
+static int new_len(char *arg, t_env *envir, bool read_backslash){
+    int len = 0;
+    int i = 0; 
+    char var_name[256];
+    int var_len;
+    while (arg[i]) { 
+        // if (arg[i] == '\\' && (arg[i + 1] == '$'|| arg[i + 1] == '"'))
+        //     i++;
+        if (arg[i] == '$' && (i == 0 || arg[i - 1] != '\\') && ft_isalnum(arg[i+1])){
+            var_len = 0;
+            i++;
+            while (arg[i] && (ft_isalnum(arg[i]) || arg[i]=='_')) {
+                var_name[var_len++] = arg[i++];
+            }
+            var_name[var_len] = '\0';
+            if (getcopyenv(var_name, &envir)) {
+                len += ft_strlen(getcopyenv(var_name, &envir));
+            }
+        } else if (arg[i]=='\\' && arg[i+1]!='$'){
+            if(read_backslash){
+                len++;
+            }
+            i++;
+        }else{
+            len++;
+            i++;
+        }
     }
-    return count;
+    return len;
 }
 
-static char *no_quotes(char *arg){
+static char *no_quotes(char *arg, t_env *envir, bool read_backslash){
     int i;
     int j;
-    int len;
+    int var_len;
     char *res;
-    i=0;
-    j=0;
-    len=ft_strlen(arg);
-    res=malloc(sizeof(char)*(len-count_esc(arg)+1));
-    if(!res){
+    char var_name[256]; 
+    i = 0;
+    j = 0;
+    res = malloc(sizeof(char)*(new_len(arg, envir, read_backslash) + 1));
+    if (!res) {
         return NULL;
     }
-    while(i<len){
-        if (arg[i] == '\\')
+    // printf("%i",new_len(arg, envir, read_backslash)+1);
+    while (arg[i]) {
+        if (arg[i] == '$' && (i == 0 || arg[i - 1] != '\\') && ft_isalnum(arg[i+1])){
+            var_len = 0;
             i++;
-        res[j]=arg[i];
-        i++;
-        j++;
+            while (arg[i] && (ft_isalnum(arg[i]) || arg[i]=='_')) {
+                var_name[var_len++] = arg[i++];
+            }
+            var_name[var_len] = '\0';
+            if (getcopyenv(var_name, &envir)) {
+                ft_strcat(res, getcopyenv(var_name, &envir));
+                j = ft_strlen(res); 
+            }
+        } else if (arg[i] == '\\') {
+            if (read_backslash && arg[i+1]!='$') {
+                res[j++] = arg[i++];
+            }else{
+                i++;
+            }
+        } else {
+            res[j++] = arg[i++];
+        }
     }
-    res[j]='\0';
+    res[j] = '\0'; 
+    // printf("%s ", res);
     return res;
 }
 
-static char *double_quotes(char *arg, t_env *envir){
-    int i;
-    int j;
-    int len;
+
+static char *double_quotes(char *arg, t_env *envir, bool read_backslash){
     char *res;
-    (void)envir;
-    i=0;
-    j=0;
+    int len;
     len=ft_strlen(arg);
-    res=malloc(sizeof(char)*(len-1));
-    if(!res){
-        return NULL;
-    }
-    while(i<len){
-        if(arg[i]=='"' && (i == 0 || i == len - 1)){
-            i++;
-        }
-        if (arg[i] == '\\' && (arg[i + 1] == '$'|| arg[i + 1] == '"'))
-            i++;
-        res[j]=arg[i];
-        i++;
-        j++;
-    }
-    res[j]='\0';
+    arg[len-1]='\0';
+    arg=arg+1;
+    res=no_quotes(arg, envir, read_backslash);
     return res;
 }
 
@@ -81,7 +100,9 @@ static char *single_quotes(char *arg){
     char *res;
     i=0;
     len=ft_strlen(arg);
-    res=malloc(sizeof(char)*(len-1));
+    res=malloc(sizeof(char)*(len+1-2));
+    if (!res) 
+        return NULL;
     while(i<len-2){
         res[i]=arg[i+1];
         i++;
@@ -93,19 +114,17 @@ static char *single_quotes(char *arg){
 void modify_args(char **args, t_env *envir){
     int i;
     char *tmp;
-    i=0;
+    bool read_backslash;
+    read_backslash=false;
+    i=1;
     while(args[i]){
-        if(args[i][1] && args[i][0]=='$'){     
-            tmp=getcopyenv(args[i]+1, &envir);
-            if(!tmp){
-                tmp = ft_strdup(""); 
-            }
-        }else if(args[i][0]=='\'' && args[i][ft_strlen(args[i])-1]=='\''){
+        if(args[i][0]=='\'' && args[i][ft_strlen(args[i])-1]=='\''){
             tmp = single_quotes(args[i]);
         }else if(args[i][0]=='"' && args[i][ft_strlen(args[i])-1]=='"'){
-            tmp = double_quotes(args[i], envir);
-        }else{
-            tmp = no_quotes(args[i]); 
+            read_backslash=true;
+            tmp = double_quotes(args[i], envir, read_backslash);
+        }else {
+            tmp = no_quotes(args[i], envir, read_backslash); 
         }
         free(args[i]);
         args[i] = tmp;
