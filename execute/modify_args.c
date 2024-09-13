@@ -6,7 +6,7 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 19:04:39 by krazikho          #+#    #+#             */
-/*   Updated: 2024/09/12 19:46:54 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:14:48 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char *no_quotes(char *arg, t_env *envir, bool read_backslash){
         return NULL;
     }
     while (arg[i]) {
-        if (arg[i] == '$' && (i == 0 || arg[i - 1] != '\\') && ft_isalnum(arg[i+1])){
+        if (arg[i] == '$' && ft_isalnum(arg[i+1])){
             var_len = 0;
             i++;
             while (arg[i] && (ft_isalnum(arg[i]) || arg[i]=='_')) {
@@ -65,12 +65,15 @@ static char *no_quotes(char *arg, t_env *envir, bool read_backslash){
                 ft_strcat(res, getcopyenv(var_name, &envir));
                 j = ft_strlen(res); 
             }
-        } else if (arg[i] == '\\') {
-            if (read_backslash && arg[i+1]!='$') {
+        } else if (arg[i] == '\\' && ft_isalnum(arg[i+1])) {
+            if (read_backslash) {
                 res[j++] = arg[i++];
             }else{
                 i++;
             }
+        } else if (arg[i] == '\\' && !ft_isalnum(arg[i+1])) {
+            i++;
+            res[j++] = arg[i++];
         } else {
             res[j++] = arg[i++];
         }
