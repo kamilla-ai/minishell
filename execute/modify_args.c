@@ -6,7 +6,7 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 19:04:39 by krazikho          #+#    #+#             */
-/*   Updated: 2024/09/12 19:37:26 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:46:54 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static int new_len(char *arg, t_env *envir, bool read_backslash){
     char var_name[256];
     int var_len;
     while (arg[i]) { 
-        // if (arg[i] == '\\' && (arg[i + 1] == '$'|| arg[i + 1] == '"'))
-        //     i++;
         if (arg[i] == '$' && (i == 0 || arg[i - 1] != '\\') && ft_isalnum(arg[i+1])){
             var_len = 0;
             i++;
@@ -55,7 +53,6 @@ static char *no_quotes(char *arg, t_env *envir, bool read_backslash){
     if (!res) {
         return NULL;
     }
-    // printf("%i",new_len(arg, envir, read_backslash)+1);
     while (arg[i]) {
         if (arg[i] == '$' && (i == 0 || arg[i - 1] != '\\') && ft_isalnum(arg[i+1])){
             var_len = 0;
@@ -79,7 +76,6 @@ static char *no_quotes(char *arg, t_env *envir, bool read_backslash){
         }
     }
     res[j] = '\0'; 
-    // printf("%s ", res);
     return res;
 }
 
