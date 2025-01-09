@@ -29,7 +29,7 @@ To build and run Minishell, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/minishell.git
+   git clone https://github.com/kamilla-ai/minishell.git
    cd minishell
    ```
 
@@ -113,41 +113,3 @@ Minishell
 > echo $NAME
 
 ```
-
-## Known Limitations
-
-- Does not support advanced shell features like job control or scripting.
-- Limited error handling for some edge cases in redirections and pipes.
-- Signal handling may not cover all possible scenarios.
-
-## Contributing
-
-Contributions are welcome! Feel free to fork the repository and submit pull requests.
-
-1. Fork the repository.
-2. Create a new branch:
-   ```bash
-   git checkout -b feature-name
-   ```
-3. Make your changes and commit them:
-   ```bash
-   git commit -m "Add feature description"
-   ```
-4. Push your changes:
-   ```bash
-   git push origin feature-name
-   ```
-5. Open a pull request.
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-## Authors
-
-- Your Name ([yourusername](https://github.com/yourusername))
-
----
-
-Thank you for using Minishell! If you encounter any issues or have suggestions, please open an issue in the repository.
-
