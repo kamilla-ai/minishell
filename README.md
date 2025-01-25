@@ -1,3 +1,4 @@
+101/100
 # Minishell
 
 Minishell is a simple, custom shell implementation project designed to mimic the behavior of a UNIX shell. It provides fundamental features like executing commands, handling environment variables, and managing input/output redirections. This project is typically part of a curriculum to learn system programming, process management, and parsing in a UNIX-like environment.
