@@ -1,37 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   string_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:20:03 by mrhelmy           #+#    #+#             */
-/*   Updated: 2024/08/29 14:09:26 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:49:05 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// functions from libft... temperorally, until we upload a libft to our minishell project 
-
-char *ft_strcat(char *dest, const char *src) {
-    int i = 0;
-    int j = 0;
-
-    while (dest[i] != '\0') {
-        i++;
-    }
-
-    while (src[j] != '\0') {
-        dest[i] = src[j];
-        i++;
-        j++;
-    }
-
-    dest[i] = '\0';
-
-    return dest;
-}
 
 bool	ft_strcmp(char *s1, char *s2)
 {
@@ -54,16 +33,6 @@ bool	ft_strcmp(char *s1, char *s2)
 		}
 	}
 	return (true);
-}
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
 }
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
@@ -89,6 +58,11 @@ char	*ft_strdup(const char *s1)
 
 	i = ft_strlen(s1) + 1;
 	s2 = malloc(sizeof(char) * i);
+	if (!s2)
+	{
+		perror("malloc");
+		return (NULL);
+	}
 	ft_strlcpy(s2, s1, i);
 	return (s2);
 }
@@ -103,78 +77,23 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	{
 		str = malloc((sizeof(char) * (ft_strlen(s) - start + 1)));
 		if (!str)
+		{
+			perror("malloc");
 			return (NULL);
+		}
 		ft_strlcpy(str, s + start, ft_strlen(s) - start + 1);
 	}
 	else
 	{
 		str = malloc((sizeof(char) * len + 1));
 		if (!str)
+		{
+			perror("malloc");
 			return (NULL);
+		}
 		ft_strlcpy(str, s + start, len + 1);
 	}
 	return (str);
-}
-
-int	wordcount(char *str, char sep)
-{
-	int	i;
-	int	word;
-
-	word = 0;
-	i = 1;
-	if (!*str)
-		return (0);
-	while (str[i])
-	{
-		if ((str[i] == sep && str[i - 1] != sep)
-			|| (str[i] != sep && str[i + 1] == '\0'))
-			word++;
-		i++;
-	}
-	return (word);
-}
-
-char	**free_arr(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-	return (NULL);
-}
-
-char	**getwords(char **arr, char *s, char c, int word)
-{
-	int	i;
-	int	j;
-	int	k;
-
-	i = 0;
-	k = 0;
-	while (s[i] && k < word)
-	{
-		j = 0;
-		if (s[i] && s[i] != c)
-		{
-			while (s[i + j] && s[i + j] != c)
-				j++;
-			arr[k] = ft_substr(s, i, j);
-			if (!arr[k])
-				return (free_arr(arr));
-			k++;
-			i += j;
-		}
-		else
-			i++;
-	}
-	arr[k] = NULL;
-	return (arr);
 }
 
 char	**ft_split(char const *s, char c)
@@ -187,6 +106,9 @@ char	**ft_split(char const *s, char c)
 	word = wordcount((char *)s, c);
 	arr = malloc(sizeof(char *) * (word + 1));
 	if (!arr)
+	{
+		perror("malloc");
 		return (NULL);
+	}
 	return (getwords(arr, (char *)s, c, word));
 }

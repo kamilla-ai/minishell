@@ -6,43 +6,47 @@
 /*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 14:00:29 by krazikho          #+#    #+#             */
-/*   Updated: 2024/08/29 13:44:05 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/09/18 14:27:54 by krazikho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void cd(char **args, t_env **envir){
-    char *path;
-    (void)envir;
-    char cwd[1024];
-    if(!args[1]){
-        path=getenv("HOME");;
-        if(!path){
-            printf("Error reading $HOME.\n");
-            return;
-        }
-    }else if(args[1][0]=='-'){
-        if(args[1][1]=='\0'){
-            if(getcopyenv("OLDPWD", envir)!=NULL){
-                path=getcopyenv("OLDPWD", envir);
-            }else{
-                printf("bash: cd: OLDPWD not set\n");
-                return;
-            }
-        }
-    }else{
-            path=args[1];
-    } 
-    if(chdir(path)!=0){
-        printf("cd: string not in pwd: %s\n", args[1]);
-    }else{
-        update_env_for_cd(envir, "OLDPWD", getcopyenv("PWD", envir));
-        if (getcwd(cwd, sizeof(cwd)) != NULL) {
-            printf("%s\n", cwd);
-            update_env_for_cd(envir, "PWD", cwd);
-        } else {
-            printf("Error getting current working directory.\n");
-        }        
-    }
+static void	update_env_vars_for_cd(t_env **envir, int *last_exit_status)
+{
+	char	cwd[256];
+
+	update_env_for_cd(envir, "OLDPWD", getcopyenv("PWD", envir));
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		update_env_for_cd(envir, "PWD", cwd);
+	else
+	{
+		perror("cd: Error getting current working directory");
+		*last_exit_status = 1;
+	}
+}
+
+void	cd(char **args, t_env **envir, int *last_exit_status)
+{
+	char	*path;
+
+	if (!args[1])
+	{
+		path = getenv("HOME");
+		if (!path)
+		{
+			perror("cd: $HOME not set");
+			*last_exit_status = 1;
+			return ;
+		}
+	}
+	else
+		path = args[1];
+	if (chdir(path) != 0)
+	{
+		perror("cd");
+		*last_exit_status = 1;
+	}
+	else
+		update_env_vars_for_cd(envir, last_exit_status);
 }

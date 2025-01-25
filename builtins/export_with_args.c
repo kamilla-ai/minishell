@@ -5,101 +5,107 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/21 18:10:03 by mrhelmy           #+#    #+#             */
-/*   Updated: 2024/08/27 09:32:06 by thelmy           ###   ########.fr       */
+/*   Created: 2024/09/27 11:18:03 by mrhelmy           #+#    #+#             */
+/*   Updated: 2024/09/29 02:08:22 by thelmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int num_strncmp(char *s1, char* s2)
+static int	existing_args(char *av, t_export **export, int *last_exit_status,
+		int *i)
 {
-    int i = 0;
-    while (s1[i] && s2[i] && s1[i] == s2[i])
-        i++;
-    return s1[i] - s2[i];
+	char	*variable;
+
+	if (!is_valid_identifier(av))
+	{
+		write(2, "export: ", 8);
+		write(2, av, ft_strlen(av));
+		write(2, ": not a valid identifier\n", 25);
+		*last_exit_status = 1;
+		(*i) = (*i) + 1;
+		return (1);
+	}
+	variable = ft_strdup(av);
+	if (!variable)
+	{
+		perror("Error allocating memory for variable");
+		*last_exit_status = 1;
+		return (-1);
+	}
+	update_export(export, variable, NULL, last_exit_status);
+	return (0);
 }
 
-int is_valid_identifier(const char *str)
+static void	invalid_identifier(char *av, char *variable, char *value,
+		int *last_exit_status)
 {
-    int i;
-
-	i = 0;
-    if (!str || str[i] == '\0')
-        return 0;
-
-    if (!(isalpha(str[i]) || str[i] == '_')) // libft function
-        return 0;
-    i++;
-    while (str[i] != '\0')
-    {
-        if (!(isalnum(str[i]) || str[i] == '_')) // libft function
-            return 0;
-        i++;
-    }
-
-    return 1;
+	write(2, "export: ", 8);
+	write(2, av, ft_strlen(av));
+	write(2, ": not a valid identifier\n", 25);
+	free(variable);
+	free(value);
+	*last_exit_status = 1;
 }
 
-void update_env(t_env **env, char *variable, char *value)
+static int	malloc_failed(char *variable, char *value, int *last_exit_status)
 {
-    t_env *tmp;
-    t_env *new_node;
-
-    tmp = *env;
-    while (tmp != NULL)
-    {
-        if (num_strncmp(tmp->variable, variable) == 0)
-        {
-            free(tmp->value);
-            tmp->value = value;
-            free(variable);
-            return;
-        }
-        tmp = tmp->next;
-    }
-    new_node = create_env_nodes(variable, value);
-    if (new_node != NULL)
-    {
-        new_node->next = *env;
-        *env = new_node;
-    }
-    else
-    {
-        printf("Error: Memory allocation failed for new environment variable.\n");
-        free(variable);
-        free(value);
-    }
+	perror("Error allocating memory for export variable");
+	free(variable);
+	free(value);
+	*last_exit_status = 1;
+	return (1);
 }
 
-void export_with_args(t_env **env, int ac, char **av)
+static int	new_args(char *av, t_env **env, t_export **export,
+		int *last_exit_status)
 {
-    int i = 1;
-    char *variable;
-    char *value;
+	char	*variable;
+	char	*value;
+	char	*export_var;
 
-    while (i < ac)
-    {
-        if (strchr(av[i], '=') == NULL) // libft function
-        {
-            printf("export: `%s': not a valid identifier\n", av[i]);
-            i++;
-            continue;
-        }
+	variable = substr_before_char(av, '=');
+	value = substr_after_char(av, '=');
+	if (variable == NULL || !*variable || !is_valid_identifier(variable))
+		invalid_identifier(av, variable, value, last_exit_status);
+	else
+	{
+		update_env(env, variable, value, last_exit_status);
+		if (variable)
+			export_var = ft_strdup(variable);
+		else
+			export_var = NULL;
+		if (!export_var && malloc_failed(variable, value, last_exit_status))
+			return (0);
+		update_export(export, export_var, ft_strdup(value), last_exit_status);
+		value = NULL;
+	}
+	return (1);
+}
 
-        variable = substr_before_char(av[i], '=');
-        value = substr_after_char(av[i], '=');
+void	export_with_args(t_norm x, t_export **export, int ac,
+		int *last_exit_status)
+{
+	int		i;
+	int		check;
+	char	**av;
+	t_env	**env;
 
-        if (variable == NULL || !*variable || !is_valid_identifier(variable))
-        {
-            printf("export: `%s': not a valid identifier\n", av[i]);
-            free(variable);
-            free(value);
-        }
-        else
-        {
-            update_env(env, variable, value);
-        }
-        i++;
-    }
+	i = 1;
+	av = (char **)(x.var1);
+	env = (t_env **)(x.var2);
+	while (i < ac)
+	{
+		if (ft_strchr(av[i], '=') == NULL)
+		{
+			check = existing_args(av[i], export, last_exit_status, &i);
+			if (check == -1)
+				return ;
+			if (check == 1)
+				continue ;
+		}
+		else if (!new_args(av[i], env, export, last_exit_status))
+			return ;
+		i++;
+	}
 }

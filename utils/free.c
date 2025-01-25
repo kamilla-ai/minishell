@@ -3,50 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krazikho <krazikho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thelmy <thelmy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:17:37 by mrhelmy           #+#    #+#             */
-/*   Updated: 2024/09/05 14:08:47 by krazikho         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:50:14 by thelmy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// our freeing functions
 #include "../minishell.h"
 
-void free_env(t_env *env)
+void	free_exp_node(t_export *node)
 {
-	t_env *tmp;
-	
-	tmp = env;
-	while (tmp != NULL)
+	if (node)
 	{
-		tmp = env->next;
-		free(env->variable);
-		free(env->value);
-		free(env);
-		env = tmp;
+		free(node->variable);
+		free(node->value);
+		free(node);
 	}
 }
 
-void free_env_node(t_env *node)
+void	free_env_node(t_env *node)
 {
-    if (node)
-    {
-        free(node->variable);
-        free(node->value);
-        free(node);
-    }
+	if (node)
+	{
+		free(node->variable);
+		free(node->value);
+		node->ev = NULL;
+		free(node);
+	}
 }
 
-void ft_free_split(char **split) {
-    if (split == NULL) {
-        return; // Nothing to free if the array is NULL
-    }
+char	**free_arr(char **arr)
+{
+	int	i;
 
-    char **temp = split;
-    while (*temp) {
-        free(*temp); // Free each string
-        temp++;
-    }
-    free(split); // Free the array of strings itself
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+	return (NULL);
+}
+
+void	freeheredoc(struct heredoc *heredoc)
+{
+	struct heredoc	*tmp;
+
+	while (heredoc)
+	{
+		tmp = heredoc;
+		heredoc = heredoc->next;
+		free(tmp);
+		tmp = NULL;
+	}
+}
+
+void	cleanup(t_main *main)
+{
+	if (main->cmd)
+		freecmd(main->cmd, 0);
+	if (main->heredoc)
+		freeheredoc(main->heredoc);
 }
